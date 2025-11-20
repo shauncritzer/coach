@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-sage-50 via-warm-50 to-calm-50;
+    @apply text-sage-900;
+    @apply antialiased;
+    min-height: 100vh;
+  }
+
+  * {
+    @apply box-border;
+  }
+}
+
+@layer components {
+  .message-bubble {
+    @apply rounded-2xl px-4 py-3 mb-3 max-w-[85%] animate-slide-up;
+  }
+
+  .message-user {
+    @apply bg-calm-500 text-white ml-auto;
+  }
+
+  .message-assistant {
+    @apply bg-white text-sage-800 mr-auto shadow-sm border border-sage-100;
+  }
+
+  .btn-primary {
+    @apply bg-calm-600 hover:bg-calm-700 text-white font-medium py-2 px-6 rounded-full transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-white hover:bg-sage-50 text-sage-700 font-medium py-2 px-6 rounded-full transition-all duration-200 shadow-sm hover:shadow-md border border-sage-200;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-full border border-sage-200 focus:border-calm-500 focus:ring-2 focus:ring-calm-200 outline-none transition-all bg-white;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-lg p-6 border border-sage-100;
+  }
+
+  .crisis-banner {
+    @apply bg-red-50 border-l-4 border-red-500 p-4 rounded-lg mb-4;
+  }
+
+  .breathing-circle {
+    @apply w-32 h-32 rounded-full bg-gradient-to-br from-calm-400 to-calm-600 flex items-center justify-center text-white font-semibold shadow-2xl;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for chat */
+.chat-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background: #c7cfc7;
+  border-radius: 10px;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+  background: #a3b0a3;
+}
