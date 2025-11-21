@@ -373,6 +373,100 @@
             color: #FFFFFF;
             margin-bottom: 24px;
         }
+
+        /* ConvertKit Form Styling */
+        .formkit-form {
+            max-width: 100% !important;
+        }
+
+        .formkit-form .formkit-field {
+            margin-bottom: 20px !important;
+        }
+
+        .formkit-form .formkit-input,
+        .formkit-form input[type="email"],
+        .formkit-form input[type="text"] {
+            width: 100% !important;
+            padding: 14px 18px !important;
+            background: #1a1a1a !important;
+            border: 1px solid #D4AF37 !important;
+            border-radius: 8px !important;
+            font-size: 1em !important;
+            font-family: 'Inter', sans-serif !important;
+            color: #FFFFFF !important;
+            outline: none !important;
+            transition: border-color 0.3s !important;
+            box-sizing: border-box !important;
+        }
+
+        .formkit-form .formkit-input::placeholder,
+        .formkit-form input::placeholder {
+            color: #808080 !important;
+        }
+
+        .formkit-form .formkit-input:focus,
+        .formkit-form input:focus {
+            border-color: #E5C047 !important;
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2) !important;
+        }
+
+        .formkit-form .formkit-submit,
+        .formkit-form button[type="submit"] {
+            width: 100% !important;
+            background: #D4AF37 !important;
+            color: #0a0a0a !important;
+            padding: 16px 32px !important;
+            font-size: 1.1em !important;
+            font-weight: 600 !important;
+            border: none !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            transition: all 0.3s !important;
+            font-family: 'Inter', sans-serif !important;
+        }
+
+        .formkit-form .formkit-submit:hover,
+        .formkit-form button[type="submit"]:hover {
+            background: #E5C047 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3) !important;
+        }
+
+        /* Hide or style the "Built with Kit" badge */
+        .formkit-powered-by,
+        .formkit-powered-by-convertkit,
+        .formkit-guarantee,
+        a[href*="convertkit.com"] {
+            opacity: 0.3 !important;
+            font-size: 0.75em !important;
+            margin-top: 16px !important;
+            text-align: center !important;
+        }
+
+        .formkit-powered-by:hover,
+        .formkit-powered-by-convertkit:hover,
+        a[href*="convertkit.com"]:hover {
+            opacity: 0.5 !important;
+        }
+
+        /* Style labels */
+        .formkit-form label {
+            display: block !important;
+            color: #808080 !important;
+            font-size: 0.9em !important;
+            margin-bottom: 8px !important;
+            font-weight: 500 !important;
+        }
+
+        /* Success message from ConvertKit */
+        .formkit-form .formkit-success {
+            background: #1a1a1a !important;
+            border: 2px solid #D4AF37 !important;
+            border-radius: 12px !important;
+            padding: 32px !important;
+            color: #FFFFFF !important;
+            text-align: center !important;
+        }
     </style>
 </head>
 <body>
@@ -437,17 +531,7 @@
         <div class="container">
             <div class="email-form" id="emailForm">
                 <h2>Get Free Access to the AI Recovery Coach</h2>
-                <form id="accessForm">
-                    <div class="form-group">
-                        <label for="name">Name (optional)</label>
-                        <input type="text" id="name" name="name" placeholder="Your name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
-                    </div>
-                    <button type="submit" class="submit-button" id="submitBtn">Get Free Access</button>
-                </form>
+                <script async data-uid="7f94a103d0" src="https://passiveaffiliate.kit.com/7f94a103d0/index.js"></script>
             </div>
 
             <div class="success-message" id="successMessage">
@@ -482,49 +566,6 @@
     </footer>
 
     <script>
-        const accessForm = document.getElementById('accessForm');
-        const emailFormDiv = document.getElementById('emailForm');
-        const successMessage = document.getElementById('successMessage');
-        const submitBtn = document.getElementById('submitBtn');
-
-        accessForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-
-            if (!email) {
-                alert('Please enter your email address');
-                return;
-            }
-
-            // Disable submit button
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Processing...';
-
-            try {
-                // Here you would normally send to your email service
-                // For now, we'll just simulate a delay and show success
-                await new Promise(resolve => setTimeout(resolve, 1000));
-
-                // Store email in localStorage (optional, for analytics/tracking)
-                localStorage.setItem('user_email', email);
-                if (name) {
-                    localStorage.setItem('user_name', name);
-                }
-
-                // Hide form and show success message
-                emailFormDiv.style.display = 'none';
-                successMessage.classList.add('active');
-
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Something went wrong. Please try again.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Get Free Access';
-            }
-        });
-
         // Smooth scroll for CTA button
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -537,6 +578,37 @@
                     });
                 }
             });
+        });
+
+        // Optional: Listen for ConvertKit form submission and show "Start Chatting" button
+        // ConvertKit will handle the form submission and show its own success message
+        // If you want to add a "Start Chatting" button after ConvertKit's success message,
+        // you can use a MutationObserver to detect when the success message appears
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.addedNodes.length) {
+                        const successElement = document.querySelector('.formkit-success');
+                        if (successElement && !successElement.querySelector('.chat-link-added')) {
+                            // Add "Start Chatting" button to ConvertKit's success message
+                            const chatButton = document.createElement('a');
+                            chatButton.href = 'chat.html';
+                            chatButton.className = 'cta-button';
+                            chatButton.style.marginTop = '24px';
+                            chatButton.style.display = 'inline-block';
+                            chatButton.textContent = 'Start Chatting';
+                            chatButton.classList.add('chat-link-added');
+                            successElement.appendChild(chatButton);
+                        }
+                    }
+                });
+            });
+
+            // Start observing the email form for changes
+            const emailForm = document.getElementById('emailForm');
+            if (emailForm) {
+                observer.observe(emailForm, { childList: true, subtree: true });
+            }
         });
     </script>
 </body>
