@@ -288,6 +288,19 @@
             font-size: 1.1em;
         }
 
+        /* Skip to Chat Link */
+        .skip-to-chat {
+            margin-top: 16px;
+            color: #808080;
+            text-decoration: underline;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .skip-to-chat:hover {
+            color: #D4AF37;
+        }
+
         /* Footer */
         .footer {
             background: #0a0a0a;
@@ -476,6 +489,9 @@
             <h1>Your compulsive behavior isn't a <span class="highlight">moral failure</span>. It's a nervous system adaptation.</h1>
             <h2>Free AI Recovery Coach trained on 13+ years of recovery wisdom</h2>
             <a href="#email-capture" class="cta-button">Talk to the AI Coach</a>
+            <div>
+                <a href="chat.html" class="skip-to-chat">Already signed up? Go directly to chat →</a>
+            </div>
         </div>
     </section>
 
@@ -580,24 +596,37 @@
             });
         });
 
-        // Optional: Listen for ConvertKit form submission and show "Start Chatting" button
-        // ConvertKit will handle the form submission and show its own success message
-        // If you want to add a "Start Chatting" button after ConvertKit's success message,
-        // you can use a MutationObserver to detect when the success message appears
+        // Check if user has already submitted and show message
         document.addEventListener('DOMContentLoaded', function() {
+            // Check localStorage for form submission
+            if (localStorage.getItem('rewired_form_submitted') === 'true') {
+                const emailForm = document.getElementById('emailForm');
+                if (emailForm) {
+                    emailForm.innerHTML = `
+                        <h2>Welcome Back!</h2>
+                        <p style="color: #FFFFFF; margin-bottom: 24px;">You're ready to start chatting with the AI Recovery Coach.</p>
+                        <a href="chat.html" class="cta-button" style="width: 100%; text-align: center;">Start Chatting Now</a>
+                    `;
+                }
+            }
+
+            // Monitor for ConvertKit form submission success
             const observer = new MutationObserver(function(mutations) {
                 mutations.forEach(function(mutation) {
                     if (mutation.addedNodes.length) {
-                        const successElement = document.querySelector('.formkit-success');
+                        // Look for ConvertKit success message
+                        const successElement = document.querySelector('.formkit-success, [data-element="success"]');
                         if (successElement && !successElement.querySelector('.chat-link-added')) {
+                            // Mark form as submitted in localStorage
+                            localStorage.setItem('rewired_form_submitted', 'true');
+
                             // Add "Start Chatting" button to ConvertKit's success message
                             const chatButton = document.createElement('a');
                             chatButton.href = 'chat.html';
-                            chatButton.className = 'cta-button';
+                            chatButton.className = 'cta-button chat-link-added';
                             chatButton.style.marginTop = '24px';
                             chatButton.style.display = 'inline-block';
-                            chatButton.textContent = 'Start Chatting';
-                            chatButton.classList.add('chat-link-added');
+                            chatButton.textContent = 'Start Chatting Now';
                             successElement.appendChild(chatButton);
                         }
                     }
@@ -609,6 +638,9 @@
             if (emailForm) {
                 observer.observe(emailForm, { childList: true, subtree: true });
             }
+
+            // Also observe the entire document body for ConvertKit's dynamic elements
+            observer.observe(document.body, { childList: true, subtree: true });
         });
     </script>
 </body>
