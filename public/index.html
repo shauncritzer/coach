@@ -547,6 +547,13 @@
         <div class="container">
             <div class="email-form" id="emailForm">
                 <h2>Get Free Access to the AI Recovery Coach</h2>
+                <p style="color: #FFFFFF; margin-bottom: 32px; font-size: 1.1em;">Start your conversation now - no email required</p>
+                <a href="chat.html" class="cta-button" style="width: 100%; text-align: center; margin-bottom: 32px; display: block;">Start Chatting Now</a>
+
+                <div style="text-align: center; margin: 32px 0;">
+                    <p style="color: #808080; font-size: 0.95em;">Want updates and resources? Join the mailing list:</p>
+                </div>
+
                 <script async data-uid="7f94a103d0" src="https://passiveaffiliate.kit.com/7f94a103d0/index.js"></script>
             </div>
 
@@ -596,38 +603,22 @@
             });
         });
 
-        // Check if user has already submitted and show message
+        // Monitor for ConvertKit form submission success to show thank you message
         document.addEventListener('DOMContentLoaded', function() {
-            // Check localStorage for form submission
-            if (localStorage.getItem('rewired_form_submitted') === 'true') {
-                const emailForm = document.getElementById('emailForm');
-                if (emailForm) {
-                    emailForm.innerHTML = `
-                        <h2>Welcome Back!</h2>
-                        <p style="color: #FFFFFF; margin-bottom: 24px;">You're ready to start chatting with the AI Recovery Coach.</p>
-                        <a href="chat.html" class="cta-button" style="width: 100%; text-align: center;">Start Chatting Now</a>
-                    `;
-                }
-            }
-
-            // Monitor for ConvertKit form submission success
             const observer = new MutationObserver(function(mutations) {
                 mutations.forEach(function(mutation) {
                     if (mutation.addedNodes.length) {
                         // Look for ConvertKit success message
                         const successElement = document.querySelector('.formkit-success, [data-element="success"]');
-                        if (successElement && !successElement.querySelector('.chat-link-added')) {
-                            // Mark form as submitted in localStorage
-                            localStorage.setItem('rewired_form_submitted', 'true');
-
-                            // Add "Start Chatting" button to ConvertKit's success message
-                            const chatButton = document.createElement('a');
-                            chatButton.href = 'chat.html';
-                            chatButton.className = 'cta-button chat-link-added';
-                            chatButton.style.marginTop = '24px';
-                            chatButton.style.display = 'inline-block';
-                            chatButton.textContent = 'Start Chatting Now';
-                            successElement.appendChild(chatButton);
+                        if (successElement && !successElement.querySelector('.chat-thank-you')) {
+                            // Add thank you message
+                            const thankYou = document.createElement('p');
+                            thankYou.className = 'chat-thank-you';
+                            thankYou.style.marginTop = '16px';
+                            thankYou.style.color = '#D4AF37';
+                            thankYou.style.fontWeight = '600';
+                            thankYou.textContent = 'Thanks for subscribing! You can start chatting using the button above.';
+                            successElement.appendChild(thankYou);
                         }
                     }
                 });
